@@ -41,6 +41,7 @@ sudo chown $USER:$USER -R ${HOME}/docker/n8n
 cd ${HOME}/docker/n8n
 source ./setup-env.sh
 
-docker network create n8n-network
+# Sprawdź czy sieć istnieje, jeśli nie to ją utwórz
+docker network ls --format "{{.Name}}" | grep -q "^n8n-network$" || docker network create n8n-network
 
 docker compose up -d
