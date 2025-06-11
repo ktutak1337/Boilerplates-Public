@@ -56,7 +56,7 @@ SUB_DOMAIN=$(grep '^SUB_DOMAIN=' .env | cut -d '=' -f2- | tr -d '\\"')
 if [[ "$DOMAIN" == "example.com" ]]; then
 	sed -i "s/^N8N_HOST=.*/N8N_HOST=localhost/" .env || echo "N8N_HOST=localhost" >> .env
 else
-	sed -i "s/^N8N_HOST=.*/N8N_HOST=${DOMAIN}/" .env || echo "N8N_HOST=${SUB_DOMAIN}.${DOMAIN}" >> .env
+	sed -i "s/^N8N_HOST=.*/N8N_HOST=${SUB_DOMAIN}.${DOMAIN}/" .env || echo "N8N_HOST=${SUB_DOMAIN}.${DOMAIN}" >> .env
 fi
 
 sed -i "s|^WEBHOOK_URL=.*|WEBHOOK_URL=https://${SUB_DOMAIN}.${DOMAIN}/|" .env
