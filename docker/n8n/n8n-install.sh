@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 scripts=(
     "check-disk-space.sh"

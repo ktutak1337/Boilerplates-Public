@@ -72,5 +72,5 @@ setup_github_config() {
     local github_repo="$2"
     local github_branch="${3:-main}"
     
-    export GITHUB_BASE_URL="https://raw.githubusercontent.com/${github_user}/${github_repo}/${github_branch}"
+    export GITHUB_BASE_URL="https://raw.githubusercontent.com/${github_user}/${github_repo}/refs/heads/${github_branch}"
 }
