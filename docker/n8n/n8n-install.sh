@@ -41,4 +41,6 @@ sudo chown $USER:$USER -R ${HOME}/docker/n8n
 cd ${HOME}/docker/n8n
 bash setup-env.sh
 
+docker network create n8n-network
+
 docker compose up -d
