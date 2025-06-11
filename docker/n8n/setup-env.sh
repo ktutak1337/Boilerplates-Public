@@ -49,7 +49,7 @@ update_env_var "N8N_BASIC_AUTH_PASSWORD" "hasło n8n Basic Auth" "" "true"
 
 echo "DB_PATH=$HOME/docker/n8n/db" >> .env
 echo "DB_SETUP_PATH=$HOME/docker/n8n/init-data.sh" >> .env
-echo "N8N_PATH=$HOME/docker/n8n/data" >> .env
+echo "N_PATH=$HOME/docker/n8n/data" >> .env
 
 DOMAIN=$(grep '^DOMAIN=' .env | cut -d '=' -f2- | tr -d '\\"')
 SUB_DOMAIN=$(grep '^SUB_DOMAIN=' .env | cut -d '=' -f2- | tr -d '\\"')
