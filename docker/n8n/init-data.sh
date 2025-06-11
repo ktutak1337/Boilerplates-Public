@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+if [ -n "${POSTGRES_NON_ROOT_USER:-}" ] && [ -n "${POSTGRES_NON_ROOT_PASSWORD:-}" ]; then
+  PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" \
+    -v user="$POSTGRES_NON_ROOT_USER" -v password="$POSTGRES_NON_ROOT_PASSWORD" <<-EOSQL
+    CREATE USER :"user" WITH PASSWORD :'password';
+    GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_DB} TO :"user";
+    GRANT CREATE ON SCHEMA public TO :"user";
+    GRANT ALL ON ALL TABLES IN SCHEMA public TO :"user";
+    GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO :"user";
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO :"user";
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO :"user";
+EOSQL
+else
+  echo "SETUP INFO: No Environment variables given!"
+fi
