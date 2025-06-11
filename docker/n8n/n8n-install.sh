@@ -9,7 +9,7 @@ scripts=(
 
 for script in "${scripts[@]}"; do
    script_name="${script%.sh}"
-   sudo curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/main/scripts/${script}" -o "/usr/bin/${script_name}"
+   sudo curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/scripts/${script}" -o "/usr/bin/${script_name}"
    sudo chmod +x "/usr/bin/${script_name}"
 done
 
@@ -32,12 +32,13 @@ app_files=(
 curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/docker/n8n/.env.example" -o "${HOME}/docker/n8n/.env"
 
 for script in "${app_files[@]}"; do
-   sudo curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/docker/n8n/${script}" -o "${HOME}/docker/n8n/${script}"
-   if [[ "$script" == *.sh ]]; then
-    sudo chmod +x "${HOME}/docker/n8n/${script}"
-   fi
+   curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/docker/n8n/${script}" -o "${HOME}/docker/n8n/${script}"
 done
 
+sudo chmod +x ${HOME}/docker/n8n/*.sh
+sudo chown $USER:$USER -R ${HOME}/docker/n8n
 
 cd ${HOME}/docker/n8n
-source ./setup-env.sh
+bash setup-env.sh
+
+docker compose up -d
