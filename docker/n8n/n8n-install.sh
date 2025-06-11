@@ -47,7 +47,7 @@ docker network ls --format "{{.Name}}" | grep -q "^n8n-network$" || docker netwo
 docker compose up -d
 
 N8N_HOST=$(grep '^N8N_HOST=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
-N8N_PORT=${$(grep '^N8N_PORT=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'"):-5678}
+N8N_PORT=$(grep '^N8N_PORT=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'" || echo "5678")
 
 echo -e "\n\n${GREEN}Twoja instancja N8N jest pod adresem:${NORMAL}\n"
 [[ "$N8N_HOST" == "localhost" ]] && echo -e "http://${N8N_HOST}:${N8N_PORT}\n\n" || echo -e "https://${N8N_HOST}\n\n"
