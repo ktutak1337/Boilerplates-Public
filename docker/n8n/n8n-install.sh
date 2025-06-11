@@ -10,6 +10,13 @@ scripts=(
 
 mkdir -p $HOME/scripts
 
+
+curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/scripts/fetch-docker-configs.sh" -o "${HOME}/scripts";
+chmod +x $HOME/scripts/fetch-docker-configs.sh
+cp $HOME/scripts/fetch-docker-configs.sh /usr/bin/fetch-docker-configs
+
+source /usr/bin/fetch-docker-configs
+
 setup_github_config "ktutak1337" "Boilerplates-Public" "main"
 download_app_config "scripts" "scripts" "$HOME/scripts" "${scripts[@]}"
 
@@ -37,7 +44,7 @@ n8n_files=(
     "init-data.sh"
 )
 
+source /usr/bin/fetch-docker-configs
+
 setup_github_config "ktutak1337" "Boilerplates-Public" "main"
 download_app_config "docker" n8n" "$HOME/docker/n8n" "${n8n_files[@]}"
-
-
