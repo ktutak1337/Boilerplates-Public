@@ -11,7 +11,7 @@ scripts=(
 mkdir -p $HOME/scripts
 
 
-curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/scripts/fetch-docker-configs.sh" -o "${HOME}/scripts";
+curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/scripts/fetch-docker-configs.sh" -o "${HOME}/scripts/fetch-docker-configs.sh"
 chmod +x $HOME/scripts/fetch-docker-configs.sh
 cp $HOME/scripts/fetch-docker-configs.sh /usr/bin/fetch-docker-configs
 
