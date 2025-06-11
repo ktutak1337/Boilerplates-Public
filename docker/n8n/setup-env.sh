@@ -9,10 +9,10 @@ update_env_var() {
 
 	while true; do
 		if [[ "$IS_SECRET" == "true" ]]; then
-			read -s -p "Podaj ${DISPLAY_NAME}${DEFAULT_VALUE:+ (domyślnie: $DEFAULT_VALUE)}: " VALUE
+			read -s -p "Podaj ${DISPLAY_NAME}${DEFAULT_VALUE:+ (domyślnie: $DEFAULT_VALUE)}: " VALUE < /dev/tty
 			echo
 		else
-			read -p "Podaj ${DISPLAY_NAME}${DEFAULT_VALUE:+ (domyślnie: $DEFAULT_VALUE)}: " VALUE
+			read -p "Podaj ${DISPLAY_NAME}${DEFAULT_VALUE:+ (domyślnie: $DEFAULT_VALUE)}: " VALUE < /dev/tty
 		fi
 
 		if [[ -z "$VALUE" && -n "$DEFAULT_VALUE" ]]; then
