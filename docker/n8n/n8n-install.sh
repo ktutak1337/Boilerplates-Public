@@ -39,7 +39,7 @@ sudo chmod +x ${HOME}/docker/n8n/*.sh
 sudo chown $USER:$USER -R ${HOME}/docker/n8n
 
 cd ${HOME}/docker/n8n
-bash setup-env.sh
+source ./setup-env.sh
 
 docker network create n8n-network
 
