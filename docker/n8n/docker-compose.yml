@@ -52,7 +52,7 @@ services:
       retries: 10
     networks:
       - n8n-network
- 
+
   redis:
     image: redis:latest
     container_name: n8n-redis
