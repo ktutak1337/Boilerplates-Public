@@ -20,7 +20,10 @@ update_env_var() {
 		fi
 
 		if [[ -z "$VALUE" ]]; then
-			echo "❌ Wartość nie może być pusta. Spróbuj ponownie."
+			echo -e "${RED}❌ Wartość nie może być pusta. Spróbuj ponownie.${NORMAL}"
+		elif [[ "$VALUE" == *"$"* ]]; then
+			echo -e "${RED}❌ Znak dolara (\$) jest zabroniony (konflikty ze zmiennymi)!${NORMAL}"
+			echo -e "${YELLOW}ℹ️  Dozwolone: @#%^&*()_+-=[]{}|;:,.<>? itp.${NORMAL}"
 		else
 			break
 		fi
