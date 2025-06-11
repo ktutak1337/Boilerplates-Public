@@ -11,7 +11,7 @@ scripts=(
 mkdir -p $HOME/scripts
 
 setup_github_config "ktutak1337" "Boilerplates-Public" "main"
-download_app_config "n8n" "$HOME/scripts" "${scripts[@]}"
+download_app_config "scripts" "scripts" "$HOME/scripts" "${scripts[@]}"
 
 chmod +x "$HOME/scripts/"*.sh
 
@@ -19,7 +19,7 @@ for f in "$HOME/scripts/"*.sh; do
 	sudo cp "$f" "/usr/bin/$(basename "${f%.sh}")"
 done
 
-rm -rf /scripts
+# rm -rf /scripts
 
 source check-ram 1024 || exit 1
 
@@ -38,6 +38,6 @@ n8n_files=(
 )
 
 setup_github_config "ktutak1337" "Boilerplates-Public" "main"
-download_app_config "n8n" "$HOME/docker/n8n" "${n8n_files[@]}"
+download_app_config "docker" n8n" "$HOME/docker/n8n" "${n8n_files[@]}"
 
 

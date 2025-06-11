@@ -22,14 +22,15 @@ download_file() {
 }
 
 download_app_config() {
-    local app_name="$1"           # np. "n8n", "portainer", "excalidraw"
-    local target_dir="$2"         # np. "$HOME/docker/n8n"
-    local files_array=("${@:3}")  # array plików do pobrania
+    local resource_type="$1"      # "docker" lub "scripts"
+    local app_name="$2"           # np. "n8n", "portainer", "scripts"
+    local target_dir="$3"         # np. "$HOME/docker/n8n", "$HOME/scripts"
+    local files_array=("${@:4}")  # array plików do pobrania
     
-    echo -e " ${YELLOW}> Pobieram konfigurację ${app_name}...${NORMAL}"
+    echo -e " ${YELLOW}> Pobieram ${resource_type}/${app_name}...${NORMAL}"
     
-    # Buduj BASE_URL dla aplikacji
-    local app_base_url="${GITHUB_BASE_URL}/docker/${app_name}"
+    # Buduj BASE_URL w zależności od typu zasobu
+    local app_base_url="${GITHUB_BASE_URL}/${resource_type}/${app_name}"
     
     # Pobierz wszystkie pliki z array
     for file in "${files_array[@]}"; do
@@ -43,8 +44,8 @@ download_app_config() {
         fi
     done
     
-    # Auto-tworzenie .env z .env.example
-    if [[ " ${files_array[*]} " =~ " .env.example " ]]; then
+    # Auto-tworzenie .env z .env.example (tylko dla docker)
+    if [[ "$resource_type" == "docker" ]] && [[ " ${files_array[*]} " =~ " .env.example " ]]; then
         if [ ! -f "${target_dir}/.env" ]; then
             echo -e " ${YELLOW}> Tworzę plik .env z template...${NORMAL}"
             cp "${target_dir}/.env.example" "${target_dir}/.env"
@@ -54,9 +55,15 @@ download_app_config() {
         fi
     fi
     
-    echo -e " ${GREEN}🎉 ${app_name} gotowe do uruchomienia!${NORMAL}"
-    echo -e " ${BLUE}📁 Pliki w: ${target_dir}${NORMAL}"
-    echo -e " ${BLUE}🚀 Uruchom: cd ${target_dir} && docker compose up -d${NORMAL}"
+    # Różne komunikaty końcowe w zależności od typu
+    if [[ "$resource_type" == "docker" ]]; then
+        echo -e " ${GREEN}🎉 ${app_name} gotowe do uruchomienia!${NORMAL}"
+        echo -e " ${BLUE}📁 Pliki w: ${target_dir}${NORMAL}"
+        echo -e " ${BLUE}🚀 Uruchom: cd ${target_dir} && docker compose up -d${NORMAL}"
+    elif [[ "$resource_type" == "scripts" ]]; then
+        echo -e " ${GREEN}🎉 Skrypty ${app_name} pobrane pomyślnie!${NORMAL}"
+        echo -e " ${BLUE}📁 Skrypty w: ${target_dir}${NORMAL}"
+    fi
 }
 
 # Funkcja helper do ustawiania GitHub URL
