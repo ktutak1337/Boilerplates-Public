@@ -45,7 +45,6 @@ update_env_var "DOMAIN" "domenę" "example.com" "false"
 update_env_var "POSTGRES_PASSWORD" "hasło PostgreSQL (root)" "" "true"
 update_env_var "POSTGRES_NON_ROOT_PASSWORD" "hasło PostgreSQL (non-root: n8n)" "" "true"
 update_env_var "REDIS_PASSWORD" "hasło Redis" "" "true"
-update_env_var "N8N_BASIC_AUTH_PASSWORD" "hasło n8n Basic Auth" "" "true"
 
 echo "N8N_PATH=$HOME/docker/n8n/data" >> .env
 echo "DB_PATH=$HOME/docker/n8n/db" >> .env
