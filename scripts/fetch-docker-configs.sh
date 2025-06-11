@@ -7,6 +7,9 @@ download_file() {
     
     echo -e " ${BLUE}> Pobieram ${filename}...${NORMAL}"
     
+    echo ${BASE_URL}/${filename}
+    echo ${target_path}
+
     if curl -fsSL "${BASE_URL}/${filename}" -o "${target_path}"; then
         if [ "$make_executable" = true ]; then
             chmod +x "$target_path"
@@ -72,5 +75,5 @@ setup_github_config() {
     local github_repo="$2"
     local github_branch="${3:-main}"
     
-    export GITHUB_BASE_URL="https://raw.githubusercontent.com/${github_user}/${github_repo}/refs/heads/${github_branch}"
+    export GITHUB_BASE_URL="https://raw.githubusercontent.com/${github_user}/${github_repo}/${github_branch}"
 }
