@@ -1,32 +1,17 @@
 #!/bin/bash
 
 scripts=(
-    "check-disk-space.sh"
-    "check-or-install-docker.sh"
-    "check-ram.sh"
-    "fetch-docker-configs.sh"
-    "install-docker-engine-on-ubuntu.sh"
+   "check-disk-space.sh"
+   "check-or-install-docker.sh"
+   "check-ram.sh"
+   "install-docker-engine-on-ubuntu.sh"
 )
 
-mkdir -p $HOME/scripts
-
-
-curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/scripts/fetch-docker-configs.sh" -o "${HOME}/scripts/fetch-docker-configs.sh"
-chmod +x $HOME/scripts/fetch-docker-configs.sh
-cp $HOME/scripts/fetch-docker-configs.sh /usr/bin/fetch-docker-configs
-
-source /usr/bin/fetch-docker-configs
-
-setup_github_config "ktutak1337" "Boilerplates-Public" "main"
-download_app_config "scripts" "scripts" "$HOME/scripts" "${scripts[@]}"
-
-chmod +x "$HOME/scripts/"*.sh
-
-for f in "$HOME/scripts/"*.sh; do
-	sudo cp "$f" "/usr/bin/$(basename "${f%.sh}")"
+for script in "${scripts[@]}"; do
+   script_name="${script%.sh}"
+   sudo curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/main/scripts/${script}" -o "/usr/bin/${script_name}"
+   sudo chmod +x "/usr/bin/${script_name}"
 done
-
-# rm -rf /scripts
 
 source check-ram 1024 || exit 1
 
@@ -34,17 +19,25 @@ source check-disk-space 1 || exit 1
 
 source check-or-install-docker
 
-mkdir -p $HOME/n8n/{db,data}
+mkdir -p $HOME/docker/n8n/{db,data}
 
-source setup-env
 
-n8n_files=(
-    "docker-compose.yml"
-    ".env.example"
-    "init-data.sh"
+app_files=(
+   "docker-compose.yml"
+   "init-data.sh"
+   "n8n-install.sh"
+   "setup-env.sh"
 )
 
-source /usr/bin/fetch-docker-configs
+curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/docker/n8n/.env.example" -o "${HOME}/docker/n8n/.env"
 
-setup_github_config "ktutak1337" "Boilerplates-Public" "main"
-download_app_config "docker" n8n" "$HOME/docker/n8n" "${n8n_files[@]}"
+for script in "${app_files[@]}"; do
+   sudo curl -fsSL "https://raw.githubusercontent.com/ktutak1337/Boilerplates-Public/refs/heads/main/docker/n8n/${script}" -o "${HOME}/docker/n8n/${script}"
+   if [[ "$script" == *.sh ]]; then
+    sudo chmod +x "${HOME}/docker/n8n/${script}"
+   fi
+done
+
+
+cd ${HOME}/docker/n8n
+source ./setup-env.sh

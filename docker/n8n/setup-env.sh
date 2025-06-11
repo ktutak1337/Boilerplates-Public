@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-cp .env.example .env
-
 update_env_var() {
 	VAR_NAME="$1"
 	DISPLAY_NAME="$2"
